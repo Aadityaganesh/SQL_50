@@ -1,0 +1,10 @@
+/*
+Write a SQL query to calculate the average processing time for each machine_id in the Activity table. The time to complete each process is calculated as the difference between the 'end' and 'start' timestamps for each (machine_id, process_id) pair. Return the machine_id and the average processing time as processing_time, rounded to 3 decimal places. The result can be returned in any order.
+*/
+
+-- Solution
+select a.machine_id, round(avg(b.timestamp-a.timestamp), 3) as processing_time
+from Activity a join Activity b on
+    a.machine_id = b.machine_id and a.process_id = b.process_id and
+    a.activity_type = 'start' and b.activity_type = 'end'
+group by a.machine_id
